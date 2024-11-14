@@ -57,16 +57,55 @@ def six():
     pass
 
 def seven():
-    pass
+    user_input = input("Enter a words: ")
+    count_dict = {}
+    
+    for char in user_input:
+        if char in count_dict:
+            count_dict[char] += 1
+        else:
+            count_dict[char] = 1
+
+    result = ""
+    for char in user_input:
+        if count_dict[char] > 0:
+            count = count_dict[char]
+            if count > 1:
+                result += f"{count}{char}"
+            else:
+                result += char
+            count_dict[char] = 0
+
+    print(result)
+
 
 def eight():
-    pass
+    user_inp = int(input("Please, enter a number: "))
+    digit_sum = sum(int(digit) for digit in str(user_inp))
+
+    if(user_inp % 2 == 0):
+        print("Even")
+    elif (user_inp % 2 != 0):
+        print("Odd")
+    if (digit_sum % 3 == 0):
+        print("Divide by 3")
 
 def nine():
     pass
 
 def ten():
-    pass
+    user_inp = int(input("Please, enter a number: "))
+
+    if user_inp == 0:
+        print(0)
+    elif user_inp == 1:
+        print(1)
+
+    a,b = 0, 1
+    for _ in range(2, user_inp + 1):
+        a, b = b, a+b
+        
+    print(b)
 
 def eleven():
     pass
@@ -74,13 +113,18 @@ def eleven():
 def twelve():
     pass
 
-def therteen():
-    pass
+def thirteen():
+    user_inp = int(input("PLease, enter a year: "))
+
+    if (user_inp % 4 == 0 and user_inp % 100 != 0) or (year % 400 == 0):
+        print(f"{user_inp} is leap year!")
+    else:
+        print(f"{user_inp} is not leap year!")
 
 def fourteen():
     pass
 
-def fiveteen():
+def fifteen():
     pass
 
 def sixteen():
@@ -89,7 +133,7 @@ def sixteen():
 def seventeen():
     pass
 
-def eitghteen():
+def eighteen():
     pass
 
 def nineteen():
@@ -106,7 +150,21 @@ def main():
         '3': three,
         '4': four,
         '5': five,
-        '6': six
+        '6': six,
+        '7': seven,
+        '8': eight,
+        '9': nine,
+        '10': ten,
+        '11': eleven,
+        '12': twelve,
+        '13': thirteen,
+        '14': fourteen,
+        '15': fifteen,
+        '16': sixteen,
+        '17': seventeen,
+        '18': eighteen,
+        '19': nineteen,
+        '20': twenty
     }
 
     print("Choose an option(1-20): ")
