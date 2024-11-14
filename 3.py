@@ -56,6 +56,47 @@ def five():
 def six():
     pass
 
+def seven():
+    pass
+
+def eight():
+    pass
+
+def nine():
+    pass
+
+def ten():
+    pass
+
+def eleven():
+    pass
+
+def twelve():
+    pass
+
+def therteen():
+    pass
+
+def fourteen():
+    pass
+
+def fiveteen():
+    pass
+
+def sixteen():
+    pass
+
+def seventeen():
+    pass
+
+def eitghteen():
+    pass
+
+def nineteen():
+    pass
+
+def twenty():
+    pass
 
 
 def main():
