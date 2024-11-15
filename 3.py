@@ -2,7 +2,6 @@ import math
 import string
 
 def one():
-
     dic_eng = "aeiouAEIOU"
     vowel = 0
     cons = 0
@@ -30,7 +29,15 @@ def two():
     print(f"{user_degree}° = {degrees}° {minutes}' {seconds}\"")
 
 def three():
-    pass
+    user_choice = int(input("Please, choice: 1 - direct geodetic problem 2- inverse geodetic problem"))
+
+    if (user_choice == int(1)):
+        pass
+    elif(user_choice == int(2)):
+        pass
+    else:
+        print(f"You write: {user_choice}")
+
 
 def four():
     a, b, c = [float(input(f"Enter 3 numbers {_}: ")) for _ in ['a', 'b', 'c']]
