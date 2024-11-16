@@ -1,5 +1,6 @@
 import math
 import string
+import random
 
 def one():
     dic_eng = "aeiouAEIOU"
@@ -38,7 +39,6 @@ def three():
     else:
         print(f"You write: {user_choice}")
 
-
 def four():
     a, b, c = [float(input(f"Enter 3 numbers {_}: ")) for _ in ['a', 'b', 'c']]
 
@@ -58,10 +58,40 @@ def four():
         print("No squares")
 
 def five():
-    pass
+    dictionary = {
+        'q': 'й', 'w': 'ц', 'e': 'у', 'r': 'к', 't': 'е', 'y': 'н', 'u': 'г', 'i': 'ш', 'o': 'щ', 'p': 'з',
+        'a': 'ф', 's': 'ы', 'd': 'в', 'f': 'а', 'g': 'п', 'h': 'р', 'j': 'о', 'k': 'л', 'l': 'д',
+        'z': 'я', 'x': 'ч', 'c': 'с', 'v': 'м', 'b': 'и', 'n': 'т', 'm': 'ь',
+        'Q': 'Й', 'W': 'Ц', 'E': 'У', 'R': 'К', 'T': 'Е', 'Y': 'Н', 'U': 'Г', 'I': 'Ш', 'O': 'Щ', 'P': 'З',
+        'A': 'Ф', 'S': 'Ы', 'D': 'В', 'F': 'А', 'G': 'П', 'H': 'Р', 'J': 'О', 'K': 'Л', 'L': 'Д',
+        'Z': 'Я', 'X': 'Ч', 'C': 'С', 'V': 'М', 'B': 'И', 'N': 'Т', 'M': 'Ь'
+    }
+
+    user_text = input("Please, enter text: ")
+    result = []
+
+    for char in user_text:
+        if (char in dictionary):
+            result.append(dictionary[char])
+        else:
+            result.append(char)
+
+    print(''.join(result))
 
 def six():
-    pass
+
+    a, b, c = [int(input(f"Please, enter 3 sides of triangle, {_} is: ")) for _ in ['a', 'b', 'c']]
+
+    if a <= 0 or b <= 0 or c <= 0:
+        print("Triangle doesnt exist")
+    
+    if a + b <= c or a + c <= b or b + c <= a:
+        print("Triangle doesnt exist")
+    
+    a, b, c = sorted([a, b, c])
+    
+    if(a**2 + b**2 == c**2): print("Triangle is right")
+    else: print("Triangle is not right")
 
 def seven():
     user_input = input("Enter a words: ")
@@ -84,7 +114,6 @@ def seven():
             count_dict[char] = 0
 
     print(result)
-
 
 def eight():
     user_inp = int(input("Please, enter a number: "))
@@ -115,10 +144,25 @@ def ten():
     print(b)
 
 def eleven():
-    pass
+    bot_number = random.randrange(1,100,1)
+    user_choice = 0
+
+    while (user_choice != bot_number):
+        user_choice = int(input("Enter a number between 1 to 100: "))
+        print ("Less") if (user_choice > bot_number) else print("More")
+    print(f"Congrulations! The number is {bot_number}")
 
 def twelve():
-    pass
+    user_choice = int(input("Choice 1 - Binary 2 - Deciminal: "))
+
+    if(user_choice == int(1)):
+        user_input = input("ENter a binary number: ")
+        result = int(user_input,2)
+        print(f"The binary number {user_input} in deciminal is {result}")
+    elif(user_choice == int(2)):
+        user_input = int(input("Enter a number: "))
+        result = bin(int(user_input))[2:]
+        print(f"The deciminal number {user_input} in binary is {result}")
 
 def thirteen():
     user_inp = int(input("PLease, enter a year: "))
@@ -133,6 +177,7 @@ def fourteen():
 
 def fifteen():
     pass
+
 
 def sixteen():
     pass
