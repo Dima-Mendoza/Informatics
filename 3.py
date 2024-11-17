@@ -202,7 +202,6 @@ def fifteen():
 
         if arabic_num < 1 or arabic_num > 3999:
             print("The number is bigger than 3999 or less than 1")
-            return
 
         val = [
             1000, 900, 500, 400, 100, 90, 50, 40,
@@ -236,7 +235,6 @@ def fifteen():
             current_value = roman_dict.get(char, 0)
             if current_value == 0:
                 print(f"Error! The char: '{char}' isn't roman style")
-                return
             if current_value < prev_value:
                 arabic_value -= current_value
             else:
