@@ -161,6 +161,15 @@ def ten():
         
     print(b)
 
+def eleven():
+    bot_number = random.randrange(1,100,1)
+    user_choice = 0
+
+    while (user_choice != bot_number):
+        user_choice = int(input("Enter a number between 1 to 100: "))
+        print ("Less") if (user_choice > bot_number) else print("More")
+    print(f"Congrulations! The number is {bot_number}")
+
 def twelve():
     user_choice = int(input("Choice 1 - Binary 2 - Deciminal: "))
 
