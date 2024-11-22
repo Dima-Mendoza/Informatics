@@ -15,3 +15,15 @@ z1 = 2 * math.sin(3 * math.pi - 2 * alfa)**2 * math.cos(5 * math.pi + 2 * alfa)*
 z2 = (1/4) - (1/4)*math.sin(5/2*math.pi - 8 * alfa)
 
 print(round(z1,3) == round(z2,3))
+
+
+
+
+
+
+def a():
+    a = int(input(""))
+    b = sum(int(c) for c in str(a))
+
+    if (a % 2 == 0):
+        pass

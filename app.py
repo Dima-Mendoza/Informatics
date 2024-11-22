@@ -12,7 +12,7 @@ import string
 import random
 
 app = Flask(__name__)
-app.secret_key = '####'
+app.secret_key = 'what_the_price_of_this'
 
 @app.route('/')
 def home():
