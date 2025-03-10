@@ -1,79 +1,86 @@
-'''
-
-'''
-
+import codecs
+import csv
+import os
 import requests
-from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-import pandas as pd
-from fake_useragent import UserAgent
-import time
-import random
 
-ua = UserAgent()
+HEADERS = {
+    'User-Agent': 'Opera/9.80 (Windows NT 6.1; WOW64) Presto/2.12.388 Version/12.18',
+    'Referer': 'https://www.wildberries.ru/',
+    'Origin': 'https://www.wildberries.ru'
+}
 
-
-def setup_driver():
-    options = Options()
-    options.add_argument("--headless")
-    options.add_argument("--disable-gpu")
-    options.add_argument("--no-sandbox")
-    options.add_argument(f"user-agent={ua.random}")
-    options.add_argument("--window-size=1920x1080")
-
-    service = Service(ChromeDriverManager().install())
-
-    driver = webdriver.Chrome(service=service, options=options)
-    return driver
-
-def get_page(url):
-    driver = setup_driver()
-    driver.get(url)
-
-
-    time.sleep(6)
-
-    page = driver.page_source
-    driver.quit()
-
-    return page
-
-def parse_page(page):
-    soup = BeautifulSoup(page, 'html.parser')
-
-    print(soup.prettify())
-
-    products = []
-    product_elem = soup.find_all('div', {'data-index': True})
-
-    print(f"Found {len(product_elem)} products.")
-
-    for product in product_elem:
-        name = product.find('span', {'class': 'ds-text ds-text_lineClamp_2 ds-text_weight_med ds-text_color_text-primary ds-text_typography_lead-text ds-text_lead-text_normal ds-text_lead-text_med ds-text_lineClamp'})
-        name = name.get_text() if name else 'Not found'
+def extract_categories(categories):
+    stack = categories['data'][:]
+    result = []
     
-        products.append({
-            'price': price
-        })
+    while stack:
+        item = stack.pop()
+        if 'nodes' in item:
+            stack.extend(item['nodes'])
+        result.append(item)
     
-    return products
+    return result
 
-def save_to_csv(page):
-    df = pd.DataFrame(page)
-    df.to_csv('yandex.csv', index=False)
+def process_products(products):
+    return [
+        {
+            "Стоимость товара": round(item['sizes'][0]['price']['total'] / 100, 2),
+            "Название  товара": item['name'],
+            "Рейтинг товара": item['rating'] if item['rating'] > 0 else "-"
+        }
+        for item in products.get('data', {}).get('products', [])
+    ]
 
-def main():
+def get_categories():
+    try:
+        response = requests.get('https://catalog.wb.ru/menu/v11/api?locale=ru&lang=ru', headers=HEADERS)
+        response.raise_for_status()
+        return response.json(), None
+    except requests.RequestException as err:
+        return None, err
 
-    url = "https://market.yandex.ru/catalog--smartfony/16814639/list?hid=91491&glfilter=16816262:16816264&onstock=1"
+def get_products(category_key, category_id):
+    url = f'https://catalog.wb.ru/catalog/{category_key}/v2/catalog?ab_testing=false&appType=1&cat={category_id}&curr=rub&dest=-1257786&lang=ru&page=1&sort=pricedown&spp=30'
+    try:
+        response = requests.get(url, headers=HEADERS)
+        response.raise_for_status()
+        return response.json(), None
+    except requests.RequestException as err:
+        return None, err
 
-
+def run_parser(retries=0, max_retries=3):
+    categories, err = get_categories()
     
-    page = get_page(url)
-    product = parse_page(page)
-    save_to_csv(product)
+    if err:
+        if retries < max_retries:
+            print(f'Ошибка при получении категорий, попытка {retries + 1}/{max_retries}...')
+            return run_parser(retries=retries + 1)
+        else:
+            print('Не удалось получить категории. Завершение работы.')
+            return
+    
+    if os.path.isfile('data.csv'):
+        os.remove('data.csv')
+    
+    written_rows = 0
+    flat_categories = extract_categories(categories)
+    
+    with codecs.open('data.csv', 'a', "utf-8") as csvfile:
+        fieldnames = ['Стоимость товара', 'Название  товара', 'Рейтинг товара']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        
+        for category in flat_categories:
+            products, err = get_products(category['shardKey'], category['id'])
+            if err:
+                print(f'Ошибка при получении товаров для категории {category["name"]}, пропуск...')
+                continue
+            
+            parsed_products = process_products(products)
+            written_rows += len(parsed_products)
+            writer.writerows(parsed_products)
+    
+    print(f'Успешно записано {written_rows} строк в data.csv')
 
 if __name__ == '__main__':
-    main()
+    run_parser()
