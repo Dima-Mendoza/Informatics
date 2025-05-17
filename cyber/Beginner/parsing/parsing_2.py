@@ -11,6 +11,8 @@ data = []
 for item in soup.find_all("img"):
     data.append(item.get("alt"))
 
+print(data)
+
 data[0] = "Name"
 
 with open("data.csv", "w", newline="") as file:
