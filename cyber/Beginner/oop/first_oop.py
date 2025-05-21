@@ -89,26 +89,42 @@ with open('student_data.txt', 'w') as file:
 '''END THIRD TASK'''
 
 class Book:
-    def __init__(self, title, author, year):
+    def __init__(self, author, title, year):
         self.title = title
         self.author = author
         self.year = year
 
-class Library(Book):
+class Library: #Error in LOGIC!!!!
+
+    data = list()
+
     def add_book(self, book):
-        self.book.append()
+        self.data.append(book)
 
     def remove_book(self, title):
-        pass
+        for i in range(len(self.data)):
+            if str(self.data[i].title) == title:
+                self.data.pop(i)
+                break
 
     def find_books_by_author(self, author):
-        pass
+        for i in range(len(self.data)):
+            if str(self.data[i].author) == author:
+                print(f'Author {self.data[i].author} {self.data[i].title} {self.data[i].year}')
     
     def list_books(self):
-        pass
-
-book1 = Book('Kek', 'Lolita', 1984)
+        for i in range(len(self.data)):
+            print(f'List {self.data[i].author} {self.data[i].title} {self.data[i].year}')
 
 library = Library()
 
+book1 = Book('Kek', 'Lolita', 1984)
+book2 = Book('Kak', 'Angles', 1999)
+book3 = Book('Kak', 'How?', 2001)
+
 library.add_book(book1)
+library.add_book(book2)
+library.add_book(book3)
+library.remove_book('Lolita')
+library.list_books()
+library.find_books_by_author('Kak')
