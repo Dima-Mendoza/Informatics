@@ -94,7 +94,7 @@ class Book:
         self.author = author
         self.year = year
 
-class Library: #Error in LOGIC!!!!
+class Library:
 
     data = list()
 
