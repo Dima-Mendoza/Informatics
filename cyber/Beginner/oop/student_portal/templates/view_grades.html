@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>Оценки студентов</title>
+</head>
+<body>
+ <h1>Список студентов и их оценок</h1>
+ <ul>
+ {% for name, student in students.items() %}
+ <li>{{ name }} (Возраст: {{ student.age }})</li>
+ <ul>
+ {% for course, grade in student.get_grades().items() %}
+ <li>{{ course }}: {{ grade }}</li>
+ {% endfor %}
+ </ul>
+ {% endfor %}
+ </ul>
+ <a href="/">На главную</a>
+</body>
+</html>
