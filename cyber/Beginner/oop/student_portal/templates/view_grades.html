@@ -10,7 +10,7 @@
  {% for name, student in students.items() %}
  <li>{{ name }} (Возраст: {{ student.age }})</li>
  <ul>
- {% for course, grade in student.get_grades().items() %}
+ {% for course, grade in student.grades.items() %}
  <li>{{ course }}: {{ grade }}</li>
  {% endfor %}
  </ul>

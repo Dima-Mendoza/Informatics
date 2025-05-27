@@ -1,36 +1,38 @@
-from flask import Flask, render_template, request
-import models
+from flask import Flask, render_template, request, url_for, redirect
+from models import Student, Course
 
 app = Flask(__name__)
+
+#DATA BASE
+students = {}
+courses = {}
 
 @app.route('/')
 def home():
     return render_template('index.html')
 
 @app.route('/add_student', methods=['GET', 'POST'])
-def add_student(): #REFACTORING
+def add_student():
     if request.method == 'POST':
         name = request.form['name']
         age = request.form['age']
         grade = request.form['grade']
-        course = request.form['course']
+        course_name = request.form['course']
 
-        info = models.Student(name, age, {})
-        info.add_grade(self, course, grade)
+        students[name] = Student(name,age) #AI add
+        student = students[name]
+        courses[course_name] = Course(course_name)
+        course = courses[course_name]
 
-        return render_template('view_grades.html') #WE ADD INFO TO CLASS NOT TO RENDER!!!
+        course.add_student(student)
+        student.add_grade(course_name,grade)
+
+        return redirect(url_for('view_grades'))#END AI ADD
     return render_template('add_student.html')
 
-@app.route('/view_grades', methods=['GET', 'POST']) #REFACTORING!!!
+@app.route('/view_grades')
 def view_grades():
-    name = request.form['name']
-    age = request.form['age']
-    grade = request.form['grade']
-    course = request.form['course']
-
-    info = models.Student(name, age, {})
-
-    return render_template('view_grades.html', name=name, course=course, grade=grade, students={'kek', 'lol'}, student=info)
+    return render_template('view_grades.html', students=students)
 
 if __name__ == '__main__':
     app.run()

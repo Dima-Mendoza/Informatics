@@ -1,13 +1,6 @@
-'''
-TO-DO
-Replace data to __init__ as shared value
-Fix replace 
-Fix get_student_drade method
-'''
-
 class Student:
 
-    def __init__(self, name, age, grades):
+    def __init__(self, name, age):
         self.name = name
         self.age = age
         self.grades = {}
@@ -17,10 +10,10 @@ class Student:
 
     def get_grades(self):
         for course in self.grades:
-            print(course, self.grades[course])
+            return self.grades[course]
 
 class Course:
-    def __init__(self, name_course, list_students):
+    def __init__(self, name_course):
         self.name_couse = name_course
         self.list_students = {}
 
@@ -31,7 +24,7 @@ class Course:
         print(self.list_students.items())
         for i in self.list_students:
             if i == student_name.name:
-                print(student_name.grades[self.name_couse])
+                return student_name.grades[self.name_couse]
 
 # alex = Student('Alex', 19, {})
 # alex.add_grade('Math', 3)
