@@ -34,12 +34,22 @@ def add_student():
 def view_grades():
     return render_template('view_grades.html', students=students)
 
-@app.route('/add_couse', methods=['GET', 'POST'])
-def add_course():
+@app.route('/add_course', methods=['GET', 'POST'])
+def add_course():#REFACTORING PART 2.1
+    if request.method == 'POST':
+        course_name = request.form['course_name']
+        max_students = request.form['max_students']
+
+        courses[course_name] = Course(course_name)
+
+    return None
+
+@app.route('/course/<course_name>')
+def course_info():
     pass
 
 @app.route('/course/<student_name>')
-def student_indo():
+def student_info():
     pass
 
 

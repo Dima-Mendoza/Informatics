@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>Информация о студенте</title>
+</head>
+<body>
+ <h1>Студент: {{ student.name }}</h1>
+ <p>Возраст: {{ student.age }}</p>
+ <h2>Оценки:</h2>
+ <ul>
+ {% for course, grade in student.grades.items() %}
+ <li>{{ course }}: {{ grade }}</li>
+ {% endfor %}
+ </ul>
+</body>
+</html>

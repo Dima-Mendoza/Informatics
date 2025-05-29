@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>Информация о курсе</title>
+ </head>
+<body>
+ <h1>Курс: {{ course_name }}</h1>
+ <p>Средняя оценка: {{ average_grade }}</p>
+ <h2>Студенты:</h2>
+ <ul>
+ {% for student in students %}
+ <li>{{ student.name }} — {{ student.grades[course_name] }}
+ <form action="/course/{{ course_name }}/remove"
+method="post" style="display:inline;">
+ <input type="hidden" name="student_name" value="{{
+student.name }}">
+ <input type="submit" value="Удалить">
+ </form>
+ </li>
+ {% endfor %}
+ </ul>
+</body>
+</html>
