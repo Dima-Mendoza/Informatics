@@ -34,5 +34,14 @@ def add_student():
 def view_grades():
     return render_template('view_grades.html', students=students)
 
+@app.route('/add_couse', methods=['GET', 'POST'])
+def add_course():
+    pass
+
+@app.route('/course/<student_name>')
+def student_indo():
+    pass
+
+
 if __name__ == '__main__':
     app.run()
