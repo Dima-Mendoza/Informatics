@@ -41,14 +41,23 @@ def add_course():#REFACTORING PART 2.1
         max_students = request.form['max_students']
 
         courses[course_name] = Course(course_name)
+        courses[course_name + '_max'] = max_students
+        return redirect(f'/course/{course_name}')
 
-    return None
+    return render_template('add_course.html')
 
 @app.route('/course/<course_name>')
-def course_info():
-    pass
+def course_info(course_name):
+    course = Course(course_name)
+    #course.get_student_grades()
 
-@app.route('/course/<student_name>')
+    if not course:
+        abort(404, description="Not found")
+    else:
+        return render_template('course.html', 
+        course_name=course_name, average_grade=students, students=students)
+
+@app.route('/student/<student_name>')
 def student_info():
     pass
 

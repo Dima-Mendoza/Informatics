@@ -6,11 +6,11 @@
  </head>
 <body>
  <h1>Курс: {{ course_name }}</h1>
- <p>Средняя оценка: {{ average_grade }}</p>
+ <p>Средняя оценка: {{ students.values }}</p>
  <h2>Студенты:</h2>
- <ul>
+ <ul> <!--OUTPUT IS INCORRECT! DIFFERENCE DISCIPLINES HE OUTPUT IN MAIN PAGE! TRY ENTER 2 STUDENTS VIEW MATH AND BIOLOGY-->
  {% for student in students %}
- <li>{{ student.name }} — {{ student.grades[course_name] }}
+ <li>{{ student.name }} — 
  <form action="/course/{{ course_name }}/remove"
 method="post" style="display:inline;">
  <input type="hidden" name="student_name" value="{{
